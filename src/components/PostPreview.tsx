@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
 import { Post } from "../API";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -35,8 +35,16 @@ export default function PostPreview({ post }: Props) {
         </Grid>
       </Grid>
       <Grid item>
-        <Grid container>
-          <Grid item>rest of the content</Grid>
+        <Grid container direction="column" alignItems="flex-start">
+          <Grid item>
+            <Typography variant="body1">Posted by {post.owner}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="body1">Posted at {post.createdAt}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h2">{post?.title}</Typography>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
