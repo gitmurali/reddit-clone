@@ -37,10 +37,9 @@ export default function PostPreview({ post }: Props) {
       <Grid item>
         <Grid container direction="column" alignItems="flex-start">
           <Grid item>
-            <Typography variant="body1">Posted by {post.owner}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="body1">Posted at {post.createdAt}</Typography>
+            <Typography variant="body1">
+              Posted by {post.owner} at {post.createdAt}
+            </Typography>
           </Grid>
           <Grid item>
             <Typography variant="h2">{post?.title}</Typography>
