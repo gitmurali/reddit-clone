@@ -28,7 +28,7 @@ const Signup = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<IFormInput>();
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const [open, setOpen] = useState(false);
   const [signUpError, setSignupError] = useState<string>("");
   const [showCode, setShowCode] = useState<boolean>(false);
