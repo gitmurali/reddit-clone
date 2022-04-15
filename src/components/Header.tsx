@@ -9,6 +9,7 @@ import { useUser } from "../context/AuthContext";
 import RedditIcon from "@mui/icons-material/Reddit";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useRouter } from "next/router";
+import { Auth } from "aws-amplify";
 
 type Props = {};
 
@@ -37,6 +38,14 @@ export default function Header({}: Props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const signUserOut = async () => {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
   };
 
   return (
@@ -81,8 +90,7 @@ export default function Header({}: Props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => signUserOut()}>Sign out</MenuItem>
               </Menu>
             </div>
           )}
