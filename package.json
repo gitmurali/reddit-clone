@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.0",
     "@mui/material": "^5.6.0",
+    "@mui/styles": "^5.6.1",
     "aws-amplify": "^4.3.19",
     "moment": "^2.29.2",
     "next": "12.1.4",

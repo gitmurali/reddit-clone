@@ -1,6 +1,5 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -10,24 +9,25 @@ import RedditIcon from "@mui/icons-material/Reddit";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useRouter } from "next/router";
 import { Auth } from "aws-amplify";
-
+import { makeStyles } from "@mui/styles";
 type Props = {};
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   menuButton: {
-//     marginRight: theme.spacing(2),
-//   },
-//   title: {
-//     flexGrow: 1,
-//   },
-// }));
+const useStyles = makeStyles((theme: { spacing: (arg0: number) => any }) => ({
+  root: {
+    flexGrow: 1,
+    marginBottom: 64,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 export default function Header({}: Props) {
-  //   const classes = useStyles();
   const { user } = useUser();
+  const classes = useStyles();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -49,7 +49,7 @@ export default function Header({}: Props) {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div className={classes.root}>
       <AppBar position="static" color="inherit">
         <Toolbar>
           <IconButton
@@ -110,6 +110,6 @@ export default function Header({}: Props) {
           )}
         </Toolbar>
       </AppBar>
-    </Box>
+    </div>
   );
 }
