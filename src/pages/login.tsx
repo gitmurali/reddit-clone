@@ -4,7 +4,6 @@ import { Button, Grid, TextField } from "@mui/material";
 import { Auth } from "aws-amplify";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-// import { useUser } from "../context/AuthContext";
 import { useRouter } from "next/router";
 
 interface IFormInput {
@@ -25,8 +24,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<IFormInput>();
-  // const { user, setUser } = useUser();
-  const [signInError] = useState<string>("");
+  const [signInError, setSignInError] = useState<string>("");
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -43,11 +41,13 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     const { email, password } = data;
-    const signedInUser = await Auth.signIn(email, password);
-    if (signedInUser) {
+    try {
+      await Auth.signIn(email, password);
       router.push("/");
-    } else {
-      throw new Error("something went wrong");
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setSignInError(e.message);
+      }
     }
   };
 
