@@ -47,61 +47,64 @@ const Login = () => {
     } catch (e: unknown) {
       if (e instanceof Error) {
         setSignInError(e.message);
+        setOpen(true);
       }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-      <Grid
-        container
-        direction="column"
-        spacing={4}
-        alignItems="center"
-        justifyContent="center"
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        <Grid
+          container
+          direction="column"
+          spacing={4}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Grid item>
+            <TextField
+              id="email"
+              label="Email"
+              error={errors.email ? true : false}
+              type="email"
+              helperText={errors.email?.message ?? null}
+              variant="standard"
+              {...register("email")}
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              id="password"
+              label="Password"
+              error={errors.password ? true : false}
+              type="password"
+              helperText={errors.password?.message ?? null}
+              variant="standard"
+              {...register("password")}
+            />
+          </Grid>
+          <Grid item>
+            <Button variant="contained" type="submit">
+              Login
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
       >
-        <Grid item>
-          <TextField
-            id="email"
-            label="Email"
-            error={errors.email ? true : false}
-            type="email"
-            helperText={errors.email?.message ?? null}
-            variant="standard"
-            {...register("email", {
-              required: { value: true, message: "Please enter a valid email" },
-            })}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="password"
-            label="Password"
-            error={errors.password ? true : false}
-            type="password"
-            helperText={errors.password?.message ?? null}
-            variant="standard"
-            {...register("password", {
-              required: { value: true, message: "Please enter a Password." },
-              minLength: {
-                value: 8,
-                message: "Please enter a valid and stronger password.",
-              },
-            })}
-          />
-        </Grid>
-        <Grid item>
-          <Button variant="contained" type="submit">
-            Login
-          </Button>
-        </Grid>
-      </Grid>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           {signInError}
         </Alert>
       </Snackbar>
-    </form>
+    </>
   );
 };
 
