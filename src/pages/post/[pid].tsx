@@ -6,16 +6,19 @@ import { GetPostQuery, ListPostsQuery, Post } from "../../API";
 import { ParsedUrlQuery } from "querystring";
 import PostPreview from "../../components/PostPreview";
 import { Container } from "@mui/material";
+import PostComment from "../../components/PostComment";
 
 type Props = {
   post: Post;
 };
 
 export default function IndividualPosts({ post }: Props): ReactElement {
-  console.log(post);
   return (
     <Container maxWidth="md">
       <PostPreview post={post} />
+      {post?.comments?.items.map((comment) => (
+        <PostComment comment={comment} key={comment?.id} />
+      ))}
     </Container>
   );
 }

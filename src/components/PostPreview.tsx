@@ -14,9 +14,8 @@ type Props = {
 
 export default function PostPreview({ post }: Props) {
   const router = useRouter();
-
   return (
-    <Paper elevation={3}>
+    <Paper elevation={24}>
       <Grid
         container
         direction="row"
@@ -82,7 +81,7 @@ export default function PostPreview({ post }: Props) {
                   layout="intrinsic"
                 />
               </Grid>
-              {/* )} */}
+              <Grid item></Grid>
             </Grid>
           </ButtonBase>
         </Grid>

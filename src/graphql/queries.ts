@@ -52,6 +52,14 @@ export const listPosts = /* GraphQL */ `
         downvotes
         comments {
           nextToken
+          items {
+            content
+            createdAt
+            id
+            owner
+            postCommentsId
+            updatedAt
+          }
         }
         createdAt
         updatedAt
