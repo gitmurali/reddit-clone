@@ -10,6 +10,7 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import { useRouter } from "next/router";
 import { Auth } from "aws-amplify";
 import { makeStyles } from "@mui/styles";
+
 type Props = {};
 
 const useStyles = makeStyles((theme: { spacing: (arg0: number) => any }) => ({
