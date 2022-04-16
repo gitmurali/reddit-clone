@@ -24,53 +24,60 @@ export default function CreatePost({}: Props) {
   return (
     <Container maxWidth="md">
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-        <Grid container direction="column">
+        <Grid container spacing={4} direction="column">
+          {/* Title of the post */}
           <Grid item>
             <TextField
+              variant="outlined"
               id="title"
               label="Post Title"
+              type="text"
               fullWidth
               error={errors.title ? true : false}
-              type="text"
-              helperText={errors.title?.message ?? null}
-              variant="standard"
+              helperText={errors.title ? errors.title.message : null}
               {...register("title", {
-                required: { value: true, message: "Please enter a Title" },
+                required: { value: true, message: "Please enter a title." },
                 maxLength: {
                   value: 120,
-                  message: "Please enter a title that is 120 chars or less.",
+                  message:
+                    "Please enter a title that is 120 characters or less.",
                 },
               })}
             />
           </Grid>
+          {/* Contents of the post */}
           <Grid item>
             <TextField
+              variant="outlined"
               id="content"
               label="Post Content"
+              type="text"
               fullWidth
               multiline
               error={errors.content ? true : false}
-              type="text"
-              helperText={errors.content?.message ?? null}
-              variant="outlined"
-              {...register("title", {
+              helperText={errors.content ? errors.content.message : null}
+              {...register("content", {
                 required: {
                   value: true,
-                  message: "Please enter some content for your post",
+                  message: "Please enter some content for your post.",
                 },
                 maxLength: {
                   value: 1000,
                   message:
-                    "Please make sure your content is 1000 chars or less.",
+                    "Please make sure your content is 1000 characters or less.",
                 },
               })}
             />
           </Grid>
-          <Grid item>
-            <Button variant="contained" type="submit">
-              Post
-            </Button>
-          </Grid>
+          {/* Optional Image of the post */}
+          {/* <Grid item>
+            <ImageDropzone file={file} setFile={setFile} />
+          </Grid> */}
+
+          {/* Button to submit the form with those contents */}
+          <Button variant="contained" type="submit">
+            Create Post
+          </Button>
         </Grid>
       </form>
     </Container>
