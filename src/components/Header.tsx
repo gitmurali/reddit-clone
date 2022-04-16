@@ -6,20 +6,18 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useUser } from "../context/AuthContext";
 import RedditIcon from "@mui/icons-material/Reddit";
-import { Button, Menu, MenuItem } from "@mui/material";
+import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
 import { useRouter } from "next/router";
 import { Auth } from "aws-amplify";
 import { makeStyles } from "@mui/styles";
+import AddIcon from "@mui/icons-material/Add";
 
 type Props = {};
 
-const useStyles = makeStyles((theme: { spacing: (arg0: number) => any }) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     marginBottom: 64,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
@@ -67,6 +65,15 @@ export default function Header({}: Props) {
           </Typography>
           {user && (
             <div>
+              <Tooltip title="Create post">
+                <IconButton
+                  aria-label="create post"
+                  color="inherit"
+                  onClick={() => router.push("/create")}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Tooltip>
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
