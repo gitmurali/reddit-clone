@@ -53,6 +53,22 @@ export default function CreatePost({}: Props) {
       } catch (error) {
         console.log("Error uploading file: ", error);
       }
+    } else {
+
+      const createNewPostInput: CreatePostInput = {
+        title: data?.title,
+        contents: data.content,
+        upvotes: 0,
+        downvotes: 0,
+      };
+
+      const createNewPostWithoutImage = (await API.graphql({
+        query: queries.createPost,
+        variables: { input: createNewPostInput },
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+      })) as { data: CreatePostMutation };
+
+      router.push(`/post/${createNewPostWithoutImage.data.createPost?.id}`);
     }
   };
 

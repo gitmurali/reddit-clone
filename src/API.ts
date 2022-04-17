@@ -430,26 +430,35 @@ export type ListPostsQueryVariables = {
 };
 
 export type ListPostsQuery = {
-  listPosts?:  {
-    __typename: "ModelPostConnection",
-    items:  Array< {
-      __typename: "Post",
-      id: string,
-      title: string,
-      contents: string,
-      image?: string | null,
-      upvotes: number,
-      downvotes: number,
-      comments?:  {
-        __typename: "ModelCommentConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
+  listPosts?: {
+    __typename: "ModelPostConnection";
+    items: Array<{
+      __typename: "Post";
+      id: string;
+      title: string;
+      contents: string;
+      image?: string | null;
+      upvotes: number;
+      downvotes: number;
+      comments?: {
+        __typename: "ModelCommentConnection";
+        items: Array<{
+          __typename: "Comment";
+          id: string;
+          content: string;
+          createdAt: string;
+          updatedAt: string;
+          postCommentsId?: string | null;
+          owner?: string | null;
+        } | null>;
+        nextToken?: string | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type GetCommentQueryVariables = {

@@ -1,24 +1,100 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { withSSRContext } from "aws-amplify";
 import * as queries from "../../graphql/queries";
-import { GetPostQuery, ListPostsQuery, Post } from "../../API";
+import * as mutationQueries from "../../graphql/mutations";
+import {
+  GetPostQuery,
+  ListPostsQuery,
+  Post,
+  CreateCommentMutation,
+  CreateCommentInput,
+  Comment,
+} from "../../API";
 import { ParsedUrlQuery } from "querystring";
 import PostPreview from "../../components/PostPreview";
-import { Container } from "@mui/material";
+import { Container, TextField, Button, Grid } from "@mui/material";
 import PostComment from "../../components/PostComment";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { API } from "aws-amplify";
+
+interface IFormInput {
+  comment: string;
+}
 
 type Props = {
   post: Post;
 };
 
 export default function IndividualPosts({ post }: Props): ReactElement {
+  console.log(post);
+  const [comments, setComments] = useState<Comment[]>(
+    post.comments?.items as Comment[]
+  );
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IFormInput>();
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const createCommentInput: CreateCommentInput = {
+      content: data.comment,
+      postCommentsId: post.id,
+    };
+
+    const createNewComment = (await API.graphql({
+      query: mutationQueries.createComment,
+      variables: { input: createCommentInput },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    })) as { data: CreateCommentMutation };
+
+    setComments([...comments, createNewComment.data.createComment as Comment]);
+  };
+
   return (
     <Container maxWidth="md">
       <PostPreview post={post} />
-      {post?.comments?.items.map((comment) => (
-        <PostComment comment={comment} key={comment?.id} />
-      ))}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete="off"
+        style={{ marginTop: 64, marginBottom: 32 }}
+      >
+        <Grid container direction="column" spacing={2}>
+          <Grid item>
+            <TextField
+              id="comment"
+              label="Add a Comment"
+              error={errors.comment ? true : false}
+              type="text"
+              multiline
+              fullWidth
+              helperText={errors.comment?.message ?? null}
+              variant="standard"
+              {...register("comment", {
+                required: { value: true, message: "Please enter a Comment" },
+                maxLength: {
+                  value: 240,
+                  message: "Please enter a comment under 240 characters.",
+                },
+              })}
+            />
+          </Grid>
+          <Grid item justifyContent="flex-end">
+            <Button variant="contained" color="primary" type="submit">
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+      {comments
+        .sort((a: Comment, b: Comment) =>
+          b.createdAt.localeCompare(a.createdAt)
+        )
+        .map((comment) => (
+          <PostComment key={comment.id} comment={comment} />
+        ))}
     </Container>
   );
 }
