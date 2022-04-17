@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Container, Grid, TextField } from "@mui/material";
-import { useForm, SubmitHandler } from "react-hook-form";
+import ImageDropzone from "../components/ImageDropzone";
 
 interface IFormInput {
   title: string;
@@ -11,6 +12,8 @@ interface IFormInput {
 type Props = {};
 
 export default function CreatePost({}: Props) {
+  const [file, setFile] = useState<File>();
+  //   const router = useRouter();
   const {
     register,
     formState: { errors },
@@ -70,9 +73,9 @@ export default function CreatePost({}: Props) {
             />
           </Grid>
           {/* Optional Image of the post */}
-          {/* <Grid item>
+          <Grid item>
             <ImageDropzone file={file} setFile={setFile} />
-          </Grid> */}
+          </Grid>
 
           {/* Button to submit the form with those contents */}
           <Button variant="contained" type="submit">

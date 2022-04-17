@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { GetStaticProps, GetStaticPaths } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { withSSRContext } from "aws-amplify";
 import * as queries from "../../graphql/queries";
 import { GetPostQuery, ListPostsQuery, Post } from "../../API";
