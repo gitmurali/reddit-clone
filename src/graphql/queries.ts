@@ -9,8 +9,17 @@ export const getPost = /* GraphQL */ `
       title
       contents
       image
-      upvotes
-      downvotes
+      votes {
+        items {
+          vote
+          id
+          createdAt
+          updatedAt
+          postVotesId
+          owner
+        }
+        nextToken
+      }
       comments {
         items {
           id
@@ -48,18 +57,11 @@ export const listPosts = /* GraphQL */ `
         title
         contents
         image
-        upvotes
-        downvotes
+        votes {
+          nextToken
+        }
         comments {
           nextToken
-          items {
-            content
-            createdAt
-            id
-            owner
-            postCommentsId
-            updatedAt
-          }
         }
         createdAt
         updatedAt
@@ -78,8 +80,9 @@ export const getComment = /* GraphQL */ `
         title
         contents
         image
-        upvotes
-        downvotes
+        votes {
+          nextToken
+        }
         comments {
           nextToken
         }
@@ -109,8 +112,6 @@ export const listComments = /* GraphQL */ `
           title
           contents
           image
-          upvotes
-          downvotes
           createdAt
           updatedAt
           owner
@@ -119,6 +120,61 @@ export const listComments = /* GraphQL */ `
         createdAt
         updatedAt
         postCommentsId
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getVote = /* GraphQL */ `
+  query GetVote($id: ID!) {
+    getVote(id: $id) {
+      vote
+      id
+      post {
+        id
+        title
+        contents
+        image
+        votes {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      postVotesId
+      owner
+    }
+  }
+`;
+export const listVotes = /* GraphQL */ `
+  query ListVotes(
+    $filter: ModelVoteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        vote
+        id
+        post {
+          id
+          title
+          contents
+          image
+          createdAt
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        postVotesId
         owner
       }
       nextToken

@@ -20,8 +20,7 @@ type Post
   title: String!
   contents: String!
   image: String
-  upvotes: Int!
-  downvotes: Int!
+  votes: [Vote!]! @hasMany
   comments: [Comment] @hasMany
 }
 
@@ -41,4 +40,22 @@ type Comment
   id: ID!
   post: Post @belongsTo
   content: String!
+}
+
+type Vote
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+      { allow: private, operations: [read] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  vote: String!
+  id: ID!
+  post: Post @belongsTo
 }

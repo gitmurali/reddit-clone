@@ -156,6 +156,68 @@
           },
           "isDeprecated" : false,
           "deprecationReason" : null
+        }, {
+          "name" : "getVote",
+          "description" : null,
+          "args" : [ {
+            "name" : "id",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "SCALAR",
+                "name" : "ID",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Vote",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "listVotes",
+          "description" : null,
+          "args" : [ {
+            "name" : "filter",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelVoteFilterInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "limit",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "nextToken",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "ModelVoteConnection",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
         } ],
         "inputFields" : null,
         "interfaces" : [ ],
@@ -222,32 +284,49 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "upvotes",
+          "name" : "votes",
           "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
+          "args" : [ {
+            "name" : "filter",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelVoteFilterInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "sortDirection",
+            "description" : null,
+            "type" : {
+              "kind" : "ENUM",
+              "name" : "ModelSortDirection",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "limit",
+            "description" : null,
+            "type" : {
               "kind" : "SCALAR",
               "name" : "Int",
               "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "downvotes",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "nextToken",
+            "description" : null,
+            "type" : {
               "kind" : "SCALAR",
-              "name" : "Int",
+              "name" : "String",
               "ofType" : null
-            }
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "ModelVoteConnection",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -363,17 +442,8 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
-        "kind" : "SCALAR",
-        "name" : "Int",
-        "description" : "Built-in Int",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
         "kind" : "OBJECT",
-        "name" : "ModelCommentConnection",
+        "name" : "ModelVoteConnection",
         "description" : null,
         "fields" : [ {
           "name" : "items",
@@ -387,7 +457,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "OBJECT",
-                "name" : "Comment",
+                "name" : "Vote",
                 "ofType" : null
               }
             }
@@ -412,9 +482,24 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
-        "name" : "Comment",
+        "name" : "Vote",
         "description" : null,
         "fields" : [ {
+          "name" : "vote",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "id",
           "description" : null,
           "args" : [ ],
@@ -437,21 +522,6 @@
             "kind" : "OBJECT",
             "name" : "Post",
             "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "content",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -486,13 +556,17 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "postCommentsId",
+          "name" : "postVotesId",
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -523,24 +597,24 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelCommentFilterInput",
+        "name" : "ModelVoteFilterInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
+          "name" : "vote",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "id",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelIDInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "content",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelStringInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -552,7 +626,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCommentFilterInput",
+              "name" : "ModelVoteFilterInput",
               "ofType" : null
             }
           },
@@ -565,7 +639,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCommentFilterInput",
+              "name" : "ModelVoteFilterInput",
               "ofType" : null
             }
           },
@@ -575,12 +649,12 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelCommentFilterInput",
+            "name" : "ModelVoteFilterInput",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "postCommentsId",
+          "name" : "postVotesId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -594,7 +668,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelIDInput",
+        "name" : "ModelStringInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -602,7 +676,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -611,7 +685,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -620,7 +694,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -629,7 +703,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -638,7 +712,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -647,7 +721,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -656,7 +730,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -665,7 +739,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -677,7 +751,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "ID",
+              "name" : "String",
               "ofType" : null
             }
           },
@@ -687,7 +761,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -867,8 +941,17 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+        "kind" : "SCALAR",
+        "name" : "Int",
+        "description" : "Built-in Int",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelStringInput",
+        "name" : "ModelIDInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -876,7 +959,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -885,7 +968,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -894,7 +977,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -903,7 +986,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -912,7 +995,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -921,7 +1004,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -930,7 +1013,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -939,7 +1022,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -951,7 +1034,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "String",
+              "name" : "ID",
               "ofType" : null
             }
           },
@@ -961,7 +1044,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "ID",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1014,6 +1097,218 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         } ],
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "ModelCommentConnection",
+        "description" : null,
+        "fields" : [ {
+          "name" : "items",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "OBJECT",
+                "name" : "Comment",
+                "ofType" : null
+              }
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "nextToken",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "Comment",
+        "description" : null,
+        "fields" : [ {
+          "name" : "id",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "post",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Post",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "content",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "createdAt",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSDateTime",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "updatedAt",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSDateTime",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "postCommentsId",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "owner",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelCommentFilterInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "content",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "and",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelCommentFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "or",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelCommentFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "not",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelCommentFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "postCommentsId",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
@@ -1096,24 +1391,6 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "upvotes",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelIntInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "downvotes",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelIntInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
           "name" : "and",
           "description" : null,
           "type" : {
@@ -1145,100 +1422,6 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelPostFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        } ],
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "INPUT_OBJECT",
-        "name" : "ModelIntInput",
-        "description" : null,
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "ne",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "eq",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "le",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "lt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "ge",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "gt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "between",
-          "description" : null,
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "attributeExists",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Boolean",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "attributeType",
-          "description" : null,
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "ModelAttributeTypes",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1448,6 +1631,105 @@
           },
           "isDeprecated" : false,
           "deprecationReason" : null
+        }, {
+          "name" : "createVote",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "CreateVoteInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "condition",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelVoteConditionInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Vote",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "updateVote",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "UpdateVoteInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "condition",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelVoteConditionInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Vote",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "deleteVote",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "DeleteVoteInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "condition",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelVoteConditionInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Vote",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
         } ],
         "inputFields" : null,
         "interfaces" : [ ],
@@ -1502,32 +1784,6 @@
             "ofType" : null
           },
           "defaultValue" : null
-        }, {
-          "name" : "upvotes",
-          "description" : null,
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "downvotes",
-          "description" : null,
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
         } ],
         "interfaces" : null,
         "enumValues" : null,
@@ -1561,24 +1817,6 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelStringInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "upvotes",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelIntInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "downvotes",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelIntInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1663,24 +1901,6 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "upvotes",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "downvotes",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1875,6 +2095,174 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "CreateVoteInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "vote",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "postVotesId",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelVoteConditionInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "vote",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "and",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelVoteConditionInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "or",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelVoteConditionInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "not",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelVoteConditionInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "postVotesId",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "UpdateVoteInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "vote",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "postVotesId",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "DeleteVoteInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
         "kind" : "OBJECT",
         "name" : "Subscription",
         "description" : null,
@@ -1994,6 +2382,66 @@
           "type" : {
             "kind" : "OBJECT",
             "name" : "Comment",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "onCreateVote",
+          "description" : null,
+          "args" : [ {
+            "name" : "owner",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Vote",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "onUpdateVote",
+          "description" : null,
+          "args" : [ {
+            "name" : "owner",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Vote",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "onDeleteVote",
+          "description" : null,
+          "args" : [ {
+            "name" : "owner",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Vote",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -2127,6 +2575,100 @@
             "kind" : "SCALAR",
             "name" : "Boolean",
             "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "attributeExists",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "attributeType",
+          "description" : null,
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "ModelAttributeTypes",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelIntInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "ne",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "le",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "lt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ge",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "gt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "between",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         }, {
@@ -2964,6 +3506,23 @@
         "onFragment" : false,
         "onField" : false
       }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
         "name" : "aws_cognito_user_pools",
         "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
@@ -3046,23 +3605,6 @@
             }
           },
           "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
         } ],
         "onOperation" : false,
         "onFragment" : false,
