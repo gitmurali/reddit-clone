@@ -56,6 +56,7 @@ export default function Header({}: Props) {
             edge="start"
             color="inherit"
             aria-label="menu"
+            onClick={() => router.push("/")}
             sx={{ mr: 2 }}
           >
             <RedditIcon />

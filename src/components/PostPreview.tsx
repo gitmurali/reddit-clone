@@ -1,5 +1,5 @@
 import { ButtonBase, Grid, Paper, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Post } from "../API";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -7,6 +7,7 @@ import { IconButton } from "@mui/material";
 import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Storage } from "aws-amplify";
 
 type Props = {
   post: Post;
@@ -14,6 +15,22 @@ type Props = {
 
 export default function PostPreview({ post }: Props) {
   const router = useRouter();
+  const [postImage, setPostImage] = useState<string>();
+
+  useEffect(() => {
+    const getImage = async () => {
+      try {
+        const signedURL = await Storage.get(post.image as string);
+        console.log("found the image: ", signedURL);
+        setPostImage(signedURL);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getImage();
+  }, []);
+
   return (
     <Paper elevation={24}>
       <Grid
@@ -74,12 +91,14 @@ export default function PostPreview({ post }: Props) {
               </Grid>
               {/* {post.image && ( */}
               <Grid item>
-                <Image
-                  src={`https://source.unsplash.com/random/980x540`}
-                  height={540}
-                  width={980}
-                  layout="intrinsic"
-                />
+                {post.image && postImage && (
+                  <Image
+                    src={postImage}
+                    height={540}
+                    width={980}
+                    layout="intrinsic"
+                  />
+                )}
               </Grid>
               <Grid item></Grid>
             </Grid>

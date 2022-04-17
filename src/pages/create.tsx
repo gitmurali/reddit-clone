@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Container, Grid, TextField } from "@mui/material";
 import ImageDropzone from "../components/ImageDropzone";
-import { Storage } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import { v4 as uuidv4 } from "uuid";
+import * as queries from "../graphql/mutations";
+import { CreatePostInput, CreatePostMutation } from "../API";
+import { useRouter } from "next/router";
 
 interface IFormInput {
   title: string;
@@ -15,7 +18,8 @@ type Props = {};
 
 export default function CreatePost({}: Props) {
   const [file, setFile] = useState<any>();
-  //   const router = useRouter();
+  const router = useRouter();
+
   const {
     register,
     formState: { errors },
@@ -25,9 +29,27 @@ export default function CreatePost({}: Props) {
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     if (file) {
       try {
-        await Storage.put(uuidv4(), file, {
-          // contentType: "image/png", // contentType is optional
+        const imagePath = uuidv4();
+        await Storage.put(imagePath, file, {
+          contentType: file.type,
         });
+
+        const createNewPostInput: CreatePostInput = {
+          title: data?.title,
+          contents: data.content,
+          image: imagePath,
+          upvotes: 0,
+          downvotes: 0,
+        };
+
+        const createNewPost = (await API.graphql({
+          query: queries.createPost,
+          variables: { input: createNewPostInput },
+          authMode: "AMAZON_COGNITO_USER_POOLS",
+        })) as { data: CreatePostMutation };
+
+        console.log("new post created: ", createNewPost);
+        router.push(`/post/${createNewPost.data.createPost?.id}`);
       } catch (error) {
         console.log("Error uploading file: ", error);
       }
