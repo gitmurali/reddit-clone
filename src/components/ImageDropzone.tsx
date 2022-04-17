@@ -1,6 +1,7 @@
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import { Grid, Typography } from "@mui/material";
+import Image from "next/image";
 
 interface Props {
   file: File;
@@ -51,10 +52,7 @@ export default function ImageDropzone({ file, setFile }: Props) {
             <Typography variant="h6">Your Image:</Typography>
           </Grid>
           <Grid item>
-            <img
-              src={URL.createObjectURL(file)}
-              style={{ width: "auto", maxHeight: 320 }}
-            />
+            <Image width={600} height={320} src={URL.createObjectURL(file)} />
           </Grid>
         </Grid>
       )}

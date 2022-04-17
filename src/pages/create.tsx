@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Container, Grid, TextField } from "@mui/material";
 import ImageDropzone from "../components/ImageDropzone";
+import { Storage } from "aws-amplify";
+import { v4 as uuidv4 } from "uuid";
 
 interface IFormInput {
   title: string;
@@ -12,7 +14,7 @@ interface IFormInput {
 type Props = {};
 
 export default function CreatePost({}: Props) {
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<any>();
   //   const router = useRouter();
   const {
     register,
@@ -21,7 +23,15 @@ export default function CreatePost({}: Props) {
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log(data);
+    if (file) {
+      try {
+        await Storage.put(uuidv4(), file, {
+          // contentType: "image/png", // contentType is optional
+        });
+      } catch (error) {
+        console.log("Error uploading file: ", error);
+      }
+    }
   };
 
   return (
