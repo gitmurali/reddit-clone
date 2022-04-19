@@ -8,23 +8,22 @@ import * as queries from "../graphql/mutations";
 import { CreatePostInput, CreatePostMutation } from "../API";
 import { useRouter } from "next/router";
 
+type Props = {};
+
 interface IFormInput {
   title: string;
   content: string;
   image?: string;
 }
 
-type Props = {};
-
 export default function CreatePost({}: Props) {
-  const [file, setFile] = useState<any>();
-  const router = useRouter();
-
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<IFormInput>();
+  const [file, setFile] = useState<any>();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     if (file) {
@@ -52,7 +51,6 @@ export default function CreatePost({}: Props) {
         console.log("Error uploading file: ", error);
       }
     } else {
-
       const createNewPostInput: CreatePostInput = {
         title: data?.title,
         contents: data.content,

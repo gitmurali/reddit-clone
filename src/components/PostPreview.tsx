@@ -17,6 +17,10 @@ export default function PostPreview({ post }: Props) {
   const router = useRouter();
   const [postImage, setPostImage] = useState<string>();
 
+  const addVote = async (oteType: string) => {
+    // create a vote
+  };
+
   useEffect(() => {
     const getImage = async () => {
       try {
@@ -45,7 +49,7 @@ export default function PostPreview({ post }: Props) {
         <Grid item style={{ maxWidth: 128 }}>
           <Grid container direction="column" alignItems="center">
             <Grid item>
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={() => addVote("upvote")}>
                 <ArrowDropUpIcon style={{ maxWidth: 24 }} />
               </IconButton>
             </Grid>
@@ -53,7 +57,10 @@ export default function PostPreview({ post }: Props) {
               <Grid container alignItems="center" direction="column">
                 <Grid item>
                   <Typography variant="h6">
-                    {(post.upvotes - post.downvotes).toString()}
+                    {(post.votes?.items?.filter((v) => v?.vote === "upvote"))
+                      .length -
+                      post?.votes?.items?.filter((v) => v?.vote === "downvote")
+                        ?.length}
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -62,7 +69,7 @@ export default function PostPreview({ post }: Props) {
               </Grid>
             </Grid>
             <Grid item>
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={() => addVote("downvote")}>
                 <ArrowDropDownIcon style={{ maxWidth: 24 }} />
               </IconButton>
             </Grid>
@@ -108,3 +115,4 @@ export default function PostPreview({ post }: Props) {
     </Paper>
   );
 }
+
