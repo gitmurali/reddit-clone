@@ -1,6 +1,6 @@
 import { ButtonBase, Grid, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Post } from "../API";
+import { CreateVoteInput, CreateVoteMutation, Post } from "../API";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { IconButton } from "@mui/material";
@@ -8,6 +8,8 @@ import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Storage } from "aws-amplify";
+import * as queries from "../graphql/mutations";
+import { API } from "aws-amplify";
 
 type Props = {
   post: Post;
@@ -17,8 +19,21 @@ export default function PostPreview({ post }: Props) {
   const router = useRouter();
   const [postImage, setPostImage] = useState<string>();
 
-  const addVote = async (oteType: string) => {
+  const addVote = async (voteType: string) => {
     // create a vote
+    const createNewVoteInput: CreateVoteInput = {
+      postVotesId: post.id,
+      vote: voteType,
+    };
+
+    const createNewVote = (await API.graphql({
+      query: queries.createVote,
+      variables: { input: createNewVoteInput },
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+    })) as { data: CreateVoteMutation };
+
+    console.log("new post created: ", createNewVote);
+    router.push(`/post/${post.id}`);
   };
 
   useEffect(() => {
@@ -57,8 +72,8 @@ export default function PostPreview({ post }: Props) {
               <Grid container alignItems="center" direction="column">
                 <Grid item>
                   <Typography variant="h6">
-                    {(post.votes?.items?.filter((v) => v?.vote === "upvote"))
-                      .length -
+                    {post.votes?.items?.filter((v) => v?.vote === "upvote")
+                      ?.length -
                       post?.votes?.items?.filter((v) => v?.vote === "downvote")
                         ?.length}
                   </Typography>
