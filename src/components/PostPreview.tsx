@@ -112,7 +112,7 @@ export default function PostPreview({ post }: Props) {
         setUpvotes(upvotes + 1);
       }
       setExistingVote(voteType);
-      setExistingVoteId(createNewVote.data.createVote.id);
+      setExistingVoteId(createNewVote.data?.createVote?.id);
     }
   };
 

@@ -107,6 +107,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   })) as { data: GetPostQuery };
   return {
     props: { post: postsQuery.data.getPost }, // will be passed to the page component as props
+    revalidate: 10,
   };
 };
 
